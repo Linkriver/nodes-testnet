@@ -1,0 +1,42 @@
+type = "directrequest"
+schemaVersion = 1
+name = "HTTP GET > Multi Variables Uint256"
+externalJobID = "4850dac1-5397-4013-b3b2-6dad6d370038"
+maxTaskDuration = "0s"
+contractAddress = "0xe7784602ddC8D97527E49eab1371FD786f34559A"
+observationSource = """
+       decode_log   [type="ethabidecodelog"
+                  abi="OracleRequest(bytes32 indexed specId, address requester, bytes32 requestId, uint256 payment, address callbackAddr, bytes4 callbackFunctionId, uint256 cancelExpiration, uint256 dataVersion, bytes data)"
+                  data="$(jobRun.logData)"
+                  topics="$(jobRun.logTopics)"]
+    decode_cbor  [type="cborparse" data="$(decode_log.data)"]
+    decode_log -> decode_cbor
+    decode_cbor -> var0
+    decode_cbor -> var1
+    decode_cbor -> var2
+    var0          [type="http" method=GET url="$(decode_cbor.urlVar0)" allowunrestrictednetworkaccess="true"]
+    var0_parse    [type="jsonparse" path="$(decode_cbor.pathVar0)" data="$(var0)"]
+    var0_multiply [type="multiply" input="$(var0_parse)", times="$(decode_cbor.times)"]
+    var0 -> var0_parse -> var0_multiply
+    var1          [type="http" method=GET url="$(decode_cbor.urlVar1)" allowunrestrictednetworkaccess="true"]
+    var1_parse    [type="jsonparse" path="$(decode_cbor.pathVar1)" data="$(var1)"]
+    var1_multiply [type="multiply" input="$(var1_parse)", times="$(decode_cbor.times)"]
+    var1 -> var1_parse -> var1_multiply
+    var2          [type="http" method=GET url="$(decode_cbor.urlVar2)" allowunrestrictednetworkaccess="true"]
+    var2_parse    [type="jsonparse" path="$(decode_cbor.pathVar2)" data="$(var2)"]
+    var2_multiply [type="multiply" input="$(var2_parse)", times="$(decode_cbor.times)"]
+    var2 -> var2_parse -> var2_multiply
+    var0_multiply -> encode_mwr
+    var1_multiply -> encode_mwr
+    var2_multiply -> encode_mwr
+    encode_mwr [type="ethabiencode"
+                abi="(bytes32 requestId, uint256 _var0, uint256 _var1, uint256 _var2)"
+                data="{\\"requestId\\": $(decode_log.requestId), \\"_var0\\": $(var0_multiply), \\"_var1\\": $(var1_multiply), \\"_var2\\": $(var2_multiply)}"
+                ]
+    encode_tx  [type="ethabiencode"
+                abi="fulfillOracleRequest2(bytes32 requestId, uint256 payment, address callbackAddress, bytes4 callbackFunctionId, uint256 expiration, bytes calldata data)"
+                data="{\\"requestId\\": $(decode_log.requestId), \\"payment\\":   $(decode_log.payment), \\"callbackAddress\\": $(decode_log.callbackAddr), \\"callbackFunctionId\\": $(decode_log.callbackFunctionId), \\"expiration\\": $(decode_log.cancelExpiration), \\"data\\": $(encode_mwr)}"
+                ]
+    submit_tx  [type="ethtx" to="0xe7784602ddC8D97527E49eab1371FD786f34559A" data="$(encode_tx)"]
+    encode_mwr -> encode_tx -> submit_tx
+"""
