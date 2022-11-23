@@ -3,7 +3,7 @@
 ### Name
 HTTP GET > Bool
 ### Description
-This job allows a smart contract to retrieve a single bool variable from an external APIs.
+This job allows a smart contract to retrieve a single bool variable from an external API.
 ### Oracle contract address
 [0xd5a5FE4e1a8a41246cE8fBC876270f87aeE281C5](https://mumbai.polygonscan.com/address/0xd5a5FE4e1a8a41246cE8fBC876270f87aeE281C5)
 ### Job ID
