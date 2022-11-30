@@ -80,7 +80,7 @@ contract APIConsumer is ChainlinkClient, ConfirmedOwner {
         bytes32 _requestId,
         uint256 _value
     ) public recordChainlinkFulfillment(_requestId) {
-        emit RequestVolume(_requestId, _value);
+        emit RequestValue(_requestId, _value);
         value = _value;
     }
 
