@@ -35,7 +35,7 @@ contract APIConsumer is ChainlinkClient, ConfirmedOwner {
         setChainlinkToken(0x326C977E6efc84E512bB9C30f76E30c160eD06FB);
         setChainlinkOracle(0xe7784602ddC8D97527E49eab1371FD786f34559A);
         jobId = "72cb20917d234be2832bec5a00fbca1c";
-        fee = 0; 
+        fee = 0;
     }
 
     /**
@@ -80,7 +80,7 @@ contract APIConsumer is ChainlinkClient, ConfirmedOwner {
         bytes32 _requestId,
         uint256 _value
     ) public recordChainlinkFulfillment(_requestId) {
-        emit RequestVolume(_requestId, _value);
+        emit RequestValue(_requestId, _value);
         value = _value;
     }
 
