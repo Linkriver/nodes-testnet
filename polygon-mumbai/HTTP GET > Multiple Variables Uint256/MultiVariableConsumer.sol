@@ -14,7 +14,7 @@ import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
  * PLEASE DO NOT USE THIS CODE IN PRODUCTION.
  */
 
-contract MultiWordConsumer is ChainlinkClient, ConfirmedOwner {
+contract MultiVariableConsumer is ChainlinkClient, ConfirmedOwner {
     using Chainlink for Chainlink.Request;
 
     bytes32 private jobId;
