@@ -43,7 +43,7 @@ contract APIConsumer is ChainlinkClient, ConfirmedOwner {
      * data.
      * Replace the example parameters with ones appropriate to your needs.
      */
-    function requestData() public returns (bytes32 requestId) {
+    function requestValue() public returns (bytes32 requestId) {
         Chainlink.Request memory req = buildChainlinkRequest(
             jobId,
             address(this),
@@ -80,7 +80,7 @@ contract APIConsumer is ChainlinkClient, ConfirmedOwner {
         bytes32 _requestId,
         uint256 _value
     ) public recordChainlinkFulfillment(_requestId) {
-        emit RequestVolume(_requestId, _value);
+        emit RequestValue(_requestId, _value);
         value = _value;
     }
 
