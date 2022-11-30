@@ -20,7 +20,7 @@ contract APIConsumer is ChainlinkClient, ConfirmedOwner {
     bytes32 private jobId;
     uint256 private fee;
 
-    event RequestVolume(bytes32 indexed requestId, bool value);
+    event RequestValue(bytes32 indexed requestId, bool value);
 
     /**
      * @notice Initialize the link token and target oracle
@@ -69,7 +69,7 @@ contract APIConsumer is ChainlinkClient, ConfirmedOwner {
         bytes32 _requestId,
         bool _value
     ) public recordChainlinkFulfillment(_requestId) {
-        emit RequestVolume(_requestId, _value);
+        emit RequestValue(_requestId, _value);
         value = _value;
     }
 
