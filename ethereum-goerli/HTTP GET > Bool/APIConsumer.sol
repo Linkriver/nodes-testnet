@@ -35,7 +35,7 @@ contract APIConsumer is ChainlinkClient, ConfirmedOwner {
         setChainlinkToken(0x326C977E6efc84E512bB9C30f76E30c160eD06FB);
         setChainlinkOracle(0xe7784602ddC8D97527E49eab1371FD786f34559A);
         jobId = "9c04c42591244bb59d085af801d04b43";
-        fee = 0; 
+        fee = 0;
     }
 
     /**
@@ -51,10 +51,7 @@ contract APIConsumer is ChainlinkClient, ConfirmedOwner {
         );
 
         // Set the URL to perform the GET request on
-        req.add(
-            "get",
-            "YOUR_URL"
-        );
+        req.add("get", "YOUR_URL");
 
         req.add("path", "YOUR,PATH");
 
